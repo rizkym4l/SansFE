@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(del \"c:\\\\Porto\\\\ASC-SignMaster\\\\signmaster-frontend\\\\src\\\\App.css\")",
+      "Bash(npm run build:*)",
+      "WebFetch(domain:www.duolingo.com)",
+      "Bash(npm install:*)"
+    ],
+    "additionalDirectories": [
+      "c:\\Porto\\ASC-SignMaster\\signmaster-frontend"
+    ]
+  }
+}

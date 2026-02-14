@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+.mirror {
+  transform: scaleX(-1);
+}
+
+@theme {
+  --font-cartoon: "Fredoka", sans-serif;
+  --animate-float-in-left: float-in-left 0.8s ease-out both;
+  --animate-float-in-right: float-in-right 0.8s ease-out both;
+  --animate-float-in-up: float-in-up 0.8s ease-out both;
+  --animate-fade-in-up: fade-in-up 0.6s ease-out both;
+}
+
+@keyframes float-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-80px) rotate(-12deg) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(var(--tw-rotate, 0deg)) scale(1);
+  }
+}
+
+@keyframes float-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(80px) rotate(12deg) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(var(--tw-rotate, 0deg)) scale(1);
+  }
+}
+
+@keyframes float-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.15);
+  }
+}
