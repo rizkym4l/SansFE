@@ -5,7 +5,7 @@ import Logo from "../assets/logo/dreamina-2026-02-07-6658-Create a logo featurin
 import Loading from "../components/common/Loading";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { showSuccess, showError } from "../utils/alert";
+import { showSuccess, showError, showWarning } from "../utils/alert";
 export default function RegisterPage() {
   let { loading, register, initialize } = useAuthStore();
   const navigate = useNavigate();
@@ -175,6 +175,7 @@ export default function RegisterPage() {
           <div className="space-y-3">
             <button
               type="button"
+              onClick={() => showWarning('Google login coming soon')}
               className="w-full flex items-center justify-center gap-3 px-4 py-3 border-2 border-gray-200 rounded-xl text-sm font-bold text-gray-700 hover:bg-gray-50 active:scale-[0.98] transition"
             >
               <GoogleIcon />
