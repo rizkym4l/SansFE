@@ -108,7 +108,7 @@ export default function LevelsPage() {
   const { user } = useAuthStore();
   const [levels, setLevels] = useState([]);
   const pageRef = useRef(null);
-  const currentLevel = user?.stats?.currentLevel ?? 1;
+  const currentLevel = user?.stats?.currentLevel || 1;
 
   useEffect(() => {
     const fetchdata = async () => {

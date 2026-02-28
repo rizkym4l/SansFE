@@ -12,7 +12,7 @@ import {
 
 const sidebarLinks = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, alwaysUnlocked: true },
-  { to: "/levels", label: "Levels", icon: Map },
+  { to: "/levels", label: "Levels", icon: Map, alwaysUnlocked: true },
   { to: "/camera-challenge", label: "Test Camera", icon: Camera },
   { to: "/leaderboard", label: "Leaderboard", icon: Trophy },
   { to: "/profile", label: "Profile", icon: UserCircle, alwaysUnlocked: true },

@@ -12,7 +12,7 @@ export default function AuthLayout() {
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const isVerified = user?.isVerified ?? true; // fallback true supaya user lama tidak kena lock
+  const isVerified = user?.isVerified ?? false;
 
   async function handleVerify() {
     if (!token.trim()) return;
