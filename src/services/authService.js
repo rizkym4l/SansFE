@@ -18,6 +18,30 @@ const authService = {
     const response = await api.get("/auth/profile");
     return response.data;
   },
+
+  async forgotPassword(email) {
+    const response = await api.post("/auth/forgot-password", { email });
+    return response.data;
+  },
+
+  async resetPassword(token, newPassword) {
+    const response = await api.post("/auth/reset-password", { token, newPassword });
+    return response.data;
+  },
+
+  async verifyEmail(token) {
+    const response = await api.post("/auth/verify-email", { token });
+    return response.data;
+  },
+
+  async refreshToken() {
+    const response = await api.post("/auth/refresh-token", {}, { withCredentials: true });
+    return response.data.data.access_token;
+  },
+
+  async logout() {
+    await api.post("/auth/logout");
+  },
 };
 
 export default authService;

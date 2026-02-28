@@ -25,6 +25,11 @@ const progressService = {
     const response = await api.post('/progress/complete', data)
     return response.data
   },
+
+  async getPaginated(page = 1, limit = 5) {
+    const response = await api.get(`/progress?page=${page}&limit=${limit}&status=completed`)
+    return response.data
+  },
 }
 
 export default progressService

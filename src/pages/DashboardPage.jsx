@@ -13,7 +13,9 @@ import {
   Clock,
   Target,
   CheckCircle,
+  History,
 } from "lucide-react";
+import Pagination from "../components/common/Pagination";
 import gsap from "gsap";
 import useAuthStore from "../context/AuthContext";
 import achievementService from "../services/achievementService";
@@ -31,6 +33,9 @@ export default function DashboardPage() {
   const [userAchievements, setUserAchievements] = useState([]);
   const [lettersMastered, setLettersMastered] = useState([]);
   const [dailyActivity, setDailyActivity] = useState(null);
+  const [progressPage, setProgressPage] = useState(1);
+  const [progressHistory, setProgressHistory] = useState({ data: [], total: 0, page: 1, totalPage: 1 });
+  const [progressLoading, setProgressLoading] = useState(false);
 
   const displayName =
     user?.profile?.displayName || user?.username || "Learner";
@@ -69,6 +74,14 @@ export default function DashboardPage() {
     }
     fetchDashboardData();
   }, []);
+
+  useEffect(() => {
+    setProgressLoading(true);
+    progressService.getPaginated(progressPage, 5)
+      .then((res) => setProgressHistory(res.data || { data: [], total: 0, page: 1, totalPage: 1 }))
+      .catch(() => {})
+      .finally(() => setProgressLoading(false));
+  }, [progressPage]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -370,6 +383,60 @@ export default function DashboardPage() {
             </div>
           )}
         </div>
+      </div>
+
+      {/* Lesson History */}
+      <div className="progress-section bg-white rounded-2xl p-6 border-2 border-gray-100 shadow-sm mb-8">
+        <div className="flex items-center gap-3 mb-5">
+          <div className="w-9 h-9 bg-blue-50 rounded-xl flex items-center justify-center">
+            <History className="w-5 h-5 text-blue-500" />
+          </div>
+          <h2 className="text-base font-bold text-gray-800">Lesson History</h2>
+        </div>
+
+        {progressLoading ? (
+          <div className="flex justify-center py-6">
+            <div className="w-7 h-7 border-2 border-orange-200 border-t-orange-500 rounded-full animate-spin" />
+          </div>
+        ) : progressHistory.data.length === 0 ? (
+          <p className="text-sm text-gray-300 font-medium text-center py-4">
+            No completed lessons yet. Start learning!
+          </p>
+        ) : (
+          <>
+            <div className="space-y-2">
+              {progressHistory.data.map((p) => (
+                <div
+                  key={p._id}
+                  className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 border border-gray-100"
+                >
+                  <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center shrink-0">
+                    <CheckCircle className="w-4 h-4 text-green-500" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-bold text-gray-800 truncate">
+                      {p.lessonId?.title || "Lesson"}
+                    </p>
+                    <p className="text-[10px] font-medium text-gray-400">
+                      {p.completedAt ? new Date(p.completedAt).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" }) : ""}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-1 shrink-0">
+                    <Star className="w-3.5 h-3.5 text-amber-500" />
+                    <span className="text-xs font-bold text-amber-500">
+                      +{p.lessonId?.rewards?.xpPoints ?? 0}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <Pagination
+              page={progressPage}
+              totalPage={progressHistory.totalPage}
+              onChange={setProgressPage}
+            />
+          </>
+        )}
       </div>
     </div>
   );

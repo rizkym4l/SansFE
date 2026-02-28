@@ -16,6 +16,8 @@ import Login from "./pages/LoginPage";
 import Register from "./pages/RegisterPage";
 import LearningPage from "./pages/LearningPage";
 import Leaderboard from "./pages/LeaderboardPage";
+import ForgotPassword from "./pages/ForgotPasswordPage";
+import ResetPassword from "./pages/ResetPasswordPage";
 
 function App() {
   const { initialize, loading } = useAuthStore();
@@ -32,6 +34,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route element={<AuthLayout />}>

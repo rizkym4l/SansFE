@@ -19,10 +19,9 @@ const userService = {
     return response.data;
   },
 
-  async getLeaderboard() {
-    const response = await api.get("/users/leaderboard");
-    // console.log('response', response)
-    return response.data.data;
+  async getLeaderboard(page = 1, limit = 20) {
+    const response = await api.get(`/users/leaderboard?page=${page}&limit=${limit}`);
+    return response.data.data; // { data, total, page, totalPage }
   },
 
   // GET /api/daily-activity/today

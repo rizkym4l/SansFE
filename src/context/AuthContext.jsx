@@ -42,13 +42,26 @@ const useAuthStore = create((set) => ({
     return data.user;
   },
 
-  logout: () => {
+  logout: async () => {
+    try {
+      await authService.logout();
+    } catch {
+      // ignore errors — cookie will expire anyway
+    }
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     set({ user: null });
   },
 
   setUser: (user) => set({ user }),
+
+  verifyEmail: async (token) => {
+    await authService.verifyEmail(token);
+    const current = JSON.parse(localStorage.getItem("user") || "{}");
+    const updated = { ...current, isVerified: true };
+    localStorage.setItem("user", JSON.stringify(updated));
+    set((state) => ({ user: { ...state.user, isVerified: true } }));
+  },
 }));
 
 export default useAuthStore;

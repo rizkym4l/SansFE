@@ -53,12 +53,19 @@ export default function SettingsPage() {
     return () => ctx.revert();
   }, []);
 
+  function sanitize(value) {
+    return value.replace(/<[^>]*>/g, "").trim();
+  }
+
   async function handleSave() {
     setSaving(true);
     setSaved(false);
     try {
       // 1. Save profile ke backend (PUT /users/profile)
-      const updatedData = await userService.updateProfile({ displayName, bio });
+      const updatedData = await userService.updateProfile({
+        displayName: sanitize(displayName),
+        bio: sanitize(bio),
+      });
 
       // Update user di Zustand store + localStorage
       if (updatedData.data) {
